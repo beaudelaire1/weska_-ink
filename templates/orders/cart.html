@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% load money %}
+{% block title %}Mon panier · WESKA INK{% endblock %}
+{% block content %}<section class="page-intro page-intro-small"><span class="eyebrow">WESKA INK · TA SÉLECTION</span><h1>Le <em>panier.</em></h1></section><section class="cart-layout"><div class="cart-items" id="cart-contents">{% include "orders/partials/cart_contents.html" %}</div></section>{% endblock %}

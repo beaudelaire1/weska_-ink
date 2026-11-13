@@ -1,0 +1,2 @@
+{% load money %}
+<div class="product-grid">{% for product in products %}{% include "catalog/partials/product_card.html" %}{% empty %}<div class="empty-state"><span>✳</span><h2>Aucun tattoo pour l'instant.</h2><p>Essaie d'autres filtres ou reviens nous voir bientôt.</p><a class="text-link" href="{% url 'catalog:list' %}">Effacer les filtres →</a></div>{% endfor %}</div>

@@ -1,0 +1,41 @@
+{% load static money %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f0e8">
+  <meta name="description" content="{% block meta_description %}Tatouages temporaires dessinés pour durer le temps d'une histoire. Découvrez WESKA INK, boutique indépendante en Guyane.{% endblock %}">
+  <title>{% block title %}Tatouages temporaires · WESKA INK{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}?v=2026-11-13-home">
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.min.js" integrity="sha384-2OatzQy1H+Zd/IIrjr1TcuDGqLXeHhbooAyJY1KdQMKnr4LZ22k31GBLdYKHmVjg" crossorigin="anonymous" defer></script>
+  <script src="{% static 'js/site.js' %}" defer></script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <div class="announcement"><span>FAIT POUR TA PEAU, PENSÉ POUR TA VIE</span><span>Livraison et retrait en Guyane · détails au paiement</span></div>
+  <header class="site-header">
+    <a class="wordmark" href="{% url 'home' %}" aria-label="WESKA INK, accueil">WESKA<span>INK</span><i>®</i></a>
+    <button class="mobile-menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
+    <nav class="main-nav" data-main-nav>
+      <a href="{% url 'catalog:list' %}">La boutique</a>
+      {% for collection in nav_collections %}<a href="{{ collection.get_absolute_url }}">{{ collection.name }}</a>{% endfor %}
+      <a href="{% url 'about' %}">Notre histoire</a>
+    </nav>
+    <div class="header-actions">
+      <a class="icon-link" href="{% url 'catalog:list' %}" aria-label="Rechercher"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.5"></circle><path d="m16 16 4.2 4.2"></path></svg></a>
+      <a class="cart-link" id="cart-indicator" href="{% url 'orders:cart' %}"><span>Panier</span><b>{{ cart_count }}</b></a>
+    </div>
+  </header>
+  {% if messages %}<div class="toast-stack" aria-live="polite">{% for message in messages %}<div class="toast toast-{{ message.tags }}" data-toast>{{ message }}<button type="button" aria-label="Fermer" data-dismiss>×</button></div>{% endfor %}</div>{% endif %}
+  <main>{% block content %}{% endblock %}</main>
+  <footer class="site-footer">
+    <div class="footer-top"><a class="wordmark wordmark-light" href="{% url 'home' %}">WESKA<span>INK</span><i>®</i></a><p>Ton corps. Ton rythme.<br>Ton encre temporaire.</p><a class="footer-cta" href="{% url 'catalog:list' %}">Trouver mon prochain tattoo <span>↗</span></a></div>
+    <div class="footer-bottom"><span>© {% now "Y" %} WESKA INK · Guyane française</span><div><a href="{% url 'faq' %}">FAQ</a><a href="{% url 'contact' %}">Contact</a><a href="{% url 'legal' %}">Infos légales</a><a href="/django-admin/">Espace équipe</a></div></div>
+  </footer>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,11 @@
+Django>=5.2,<5.3
+django-htmx>=1.26,<2
+dj-database-url>=2.3,<3
+python-dotenv>=1.0,<2
+django-storages[s3]>=1.14,<2
+django-axes>=8,<10
+whitenoise>=6.8,<7
+Pillow>=11,<13
+stripe>=12,<14
+psycopg[binary]>=3.2,<4
+gunicorn>=23,<24

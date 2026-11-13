@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load money %}
+{% block title %}{% if active_collection %}{{ active_collection.name }} · {% endif %}La boutique WESKA INK{% endblock %}
+{% block content %}
+<section class="page-intro"><span class="eyebrow">WESKA INK · SHOP</span><h1>{% if active_collection %}{{ active_collection.name }}{% else %}La <em>boutique.</em>{% endif %}</h1><p>Choisis le dessin qui te ressemble aujourd'hui.</p></section>
+<section class="catalog-layout">
+  <aside class="catalog-sidebar"><form method="get" action="{% url 'catalog:list' %}" hx-get="{% url 'catalog:list' %}" hx-target="#product-grid" hx-push-url="true" hx-trigger="change, keyup changed delay:350ms from:input[name=q]">
+    <label class="filter-label" for="catalog-search">Chercher</label><div class="search-field"><input id="catalog-search" name="q" type="search" value="{{ query }}" placeholder="Un motif, une idée…"><button aria-label="Rechercher">⌕</button></div>
+    <span class="filter-label">Prix TTC · en euros</span><div class="price-range"><label>De<input type="number" name="min_price" min="0" step="1" value="{{ request.GET.min_price }}" placeholder="0"></label><label>À<input type="number" name="max_price" min="0" step="1" value="{{ request.GET.max_price }}" placeholder="—"></label></div><span class="filter-label">Collection</span><div class="filter-options"><label><input type="radio" name="collection" value="" {% if not selected_collection %}checked{% endif %}><span>Toutes les pièces</span></label>{% for collection in collections %}<label><input type="radio" name="collection" value="{{ collection.id }}" {% if selected_collection == collection.id|stringformat:'s' %}checked{% endif %}><span>{{ collection.name }}</span></label>{% endfor %}</div>
+    <label class="filter-check"><input type="checkbox" name="availability" value="in_stock" {% if request.GET.availability %}checked{% endif %}><span>Disponibles maintenant</span></label>
+  </form><p class="sidebar-note">Chaque pièce est pensée pour être facile à poser et confortable à porter.</p></aside>
+  <div class="catalog-main"><div class="catalog-toolbar"><span>{{ products|length }} pièce{{ products|length|pluralize:"s" }}</span><span class="sort-note">Dessiné pour changer avec toi <b>✳</b></span></div><div id="product-grid">{% include "catalog/partials/product_grid.html" %}</div></div>
+</section>
+{% endblock %}
